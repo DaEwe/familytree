@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<title>family tree</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" 
+	crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" 
+	crossorigin="anonymous">
+	<link rel="sylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.15.1/vis.css">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="static/css/style.css">
+
+</head>
+<body>
+	<div class="container-fluid" role="main">
+		<div class="page-header">
+			<h1>Familienstammbaum <small>Die Ewerts und die Kaschubas und und und ...</small></h1>
+		</div>
+		<div class="row row-eq-height">
+			<div class="movable col-lg-12" id="main-panel">
+				<div id="tree-display"></div>
+				<button type="button" class="btn btn-primary" id="add-button"><i class="fa fa-plus"></i></button>
+			</div>
+			<div class="movable hidden" id="side-panel">
+				<div>
+					<h3>Personendaten hinzufügen 
+					</h3>
+					<form class="form-horizontal" id = "person-form">
+						<div class="form-group">
+							<input type=text id="id" class="hidden">
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="name" placeholder="Vorname">
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="surname" placeholder="Nachname">
+							</div>
+							<div class="col-sm-2">
+								<input type="checkbox" id="gender" checked data-toggle="toggle" data-size="small" data-offstyle="default" data-onstyle="default" data-on="<i class='fa fa-mars'></i>" data-off="<i class='fa fa-venus'></i>">
+							</div> 
+						</div>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<div class="input-group date" data-provide="datepicker" data-date-format="dd.mm.yyyy">
+									<input type="text" id="birthday" placeholder="Geburtstag" class="form-control">
+									<div class="input-group-addon">
+										<span class="glyphicon glyphicon-th"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="maidenname" placeholder="Geburtsname">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="placeofbirth" placeholder="Geburtsort">
+							</div>
+							<div class="col-sm-6">
+								<select id="landofbirth" class="form-control" name="countries" placeholder="Geburtsland">
+								</select>
+							</div>
+						</div>
+						
+						<div class = "form-group">
+							<div class="col-sm-8 col-sm-offset-2">
+								<button type="button" class="btn btn-primary btn btn-block" id="add-entry-button">Hinzufügen</button>
+							</div>
+						</div>
+					</form>
+				</div>	
+				<div>
+					<h3> Verwandschaftsbeziehung hinzufügen</h3>
+					<form class="form-horizontal">
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-offset-4">
+								<select class="form-control" id="child-relationship-dropdown">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="father" class="col-sm-12 text-center">ist Kind von </label>
+						</div>
+						<div class="form-group">
+							<label for="father" class="col-sm-1 control-label">Vater </label>
+							<div class="col-sm-5">
+								<select class="form-control father-dropdown" id="father-relationship-dropdown">
+								</select>
+							</div>
+							<label for="mother" class="col-sm-1 control-label">Mutter </label>
+							<div class="col-sm-5">
+								<select class="form-control mother-dropdown" id="mother-relationship-dropdown">
+								</select>
+							</div>
+						</div>
+						<div class = "form-group">
+							<div class="col-sm-8 col-sm-offset-2">
+								<button type="button" class="btn btn-primary btn btn-block" id="add-relationship-button">Hinzufügen</button>
+							</div>
+
+						</div>
+					</form>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="modal-label">Login</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="exampleInputEmail1">User</label>
+						<input type="text" class="form-control " id="user-input" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Passwort</label>
+						<input type="password" class="form-control" id="password-input" placeholder="Passwort">
+					</div>
+					<div class="form-group">
+						<div id="login-error-display"></div>
+						<button type="button" id="login-button" class="btn btn-primary">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--script type="text/javascript" src=></script-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.15.1/vis.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" 
+crossorigin="anonymous"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="static/js/configuration.js"></script>
+<script type="text/javascript" src="static/js/main.js"></script>
+</body>
+</html>
