@@ -327,16 +327,20 @@ var on_login_success = function(){
 		person.birthday = $("#birthday").val();
 		person.placeofbirth = $("#placeofbirth").val();
 		person.landofbirth = $("#landofbirth").val();
-		db.update_person($("#id").val(),person, function(data){
-			if (data.errors.length === 0){
-				$("#side-panel input").val("");
-				g.add_nodes(data.results[0].data[0].graph.nodes);
-			} else {
-				console.error(data.errors);	
-			}
-		},function(data){
-		});
-
+		if (person.name=== "" && person.surname === "" ){
+			$("#entry-error-display").append("<div class='alert alert-danger' role='alert'> Bitte gib mindestens Vor- oder Nachnamen an.</div>");
+		} else {
+			$("#entry-error-display").empty();
+			db.update_person($("#id").val(),person, function(data){
+				if (data.errors.length === 0){
+					$("#side-panel input").val("");
+					g.add_nodes(data.results[0].data[0].graph.nodes);
+				} else {
+					console.error(data.errors);	
+				}
+			},function(data){
+			});
+		}
 		
 		return false;
 	});
@@ -354,15 +358,25 @@ var on_login_success = function(){
 
 	$("#add-relationship-button").click(function(){
 		var child_id = $("#child-relationship-dropdown").val();
-		db.add_parent_relation(child_id, $("#father-relationship-dropdown").val(),function(data){
-			g.add_relation(data.results[0].data[0].graph.relationships[0]);
-		},function(data){
-		});
-		db.add_parent_relation(child_id, $("#mother-relationship-dropdown").val(),function(data){
-			g.add_relation(data.results[0].data[0].graph.relationships[0]);
-		},function(data){
-		}	);
-		db.get_graph(g.populate_from_db);
+		var father_id = $("#father-relationship-dropdown").val();
+		var mother_id = $("#mother-relationship-dropdown").val();
+		if (child_id === "") {
+			$("#relationship-error-display").append("<div class='alert alert-danger' role='alert'>Kein Kind ausgewählt!</div>");
+			return;
+		}
+		$("#relationship-error-display").empty();
+		if (father_id !== ""){
+			db.add_parent_relation(child_id, father_id,function(data){
+				g.add_relation(data.results[0].data[0].graph.relationships[0]);
+			},function(data){
+			});
+		}
+		if (mother_id !== ""){
+			db.add_parent_relation(child_id, mother_id,function(data){
+				g.add_relation(data.results[0].data[0].graph.relationships[0]);
+			},function(data){
+			}	);
+		}
 	});
 
 };
