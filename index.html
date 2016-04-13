@@ -29,55 +29,60 @@
 				<div id="tree-display"></div>
 				<button type="button" class="btn btn-primary" id="add-button"><i class="fa fa-plus"></i></button>
 			</div>
+
 			<div class="movable hidden" id="side-panel">
-				<div>
-					<h3>Personendaten hinzufügen 
-					</h3>
-					<form class="form-horizontal" id = "person-form">
-						<div class="form-group">
-							<input type=text id="id" class="hidden">
-							<div class="col-sm-6">
-								<input type="text" class="form-control" id="name" placeholder="Vorname">
-							</div>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" id="surname" placeholder="Nachname">
-							</div>
-							<div class="col-sm-2">
-								<input type="checkbox" id="gender" checked data-toggle="toggle" data-size="small" data-offstyle="default" data-onstyle="default" data-on="<i class='fa fa-mars'></i>" data-off="<i class='fa fa-venus'></i>">
-							</div> 
+
+				<div id = "person-header">
+					<h3> <span id = "person-header-name"> Some Name </span>
+						<button type="button" class="btn btn-sm btn-default person-header-button" id="edit-person-button"><b><i class="fa fa-pencil" aria-hidden="true"></i></b></button>
+						<button type="button" class="btn btn-sm btn-primary pull-right person-header-button" id="add-person-button"><b><i class="fa fa-plus" aria-hidden="true"></i></b></button>
+					</h3> 
+
+				</div>
+				<form class="form-horizontal" id = "person-form">
+					<div class="form-group">
+						<input type=text id="id" class="hidden">
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="name" placeholder="Vorname">
 						</div>
-						<div class="form-group">
-							<div class="col-sm-6">
-								<div class="input-group date" data-provide="datepicker" data-date-format="dd.mm.yyyy">
-									<input type="text" id="birthday" placeholder="Geburtstag" class="form-control">
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-th"></span>
-									</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="surname" placeholder="Nachname">
+						</div>
+						<div class="col-sm-2">
+							<input type="checkbox" id="gender" checked data-toggle="toggle" data-size="small" data-offstyle="default" data-onstyle="default" data-on="<i class='fa fa-mars'></i>" data-off="<i class='fa fa-venus'></i>">
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<div class="input-group date" data-provide="datepicker" data-date-format="dd.mm.yyyy">
+								<input type="text" id="birthday" placeholder="Geburtstag" class="form-control">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
 								</div>
 							</div>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" id="maidenname" placeholder="Geburtsname">
-							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-sm-6">
-								<input type="text" class="form-control" id="placeofbirth" placeholder="Geburtsort">
-							</div>
-							<div class="col-sm-6">
-								<select id="landofbirth" class="form-control" name="countries" placeholder="Geburtsland">
-								</select>
-							</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="maidenname" placeholder="Geburtsname">
 						</div>
-						
-						<div class = "form-group">
-							<div id = "entry-error-display">
-							</div>
-							<div class="col-sm-8 col-sm-offset-2">
-								<button type="button" class="btn btn-primary btn btn-block" id="add-entry-button">Hinzufügen</button>
-							</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="placeofbirth" placeholder="Geburtsort">
 						</div>
-					</form>
-				</div>	
+						<div class="col-sm-6">
+							<select id="landofbirth" class="form-control" name="countries" placeholder="Geburtsland">
+							</select>
+						</div>
+					</div>
+
+					<div class = "form-group">
+						<div id = "entry-error-display">
+						</div>
+						<div class="col-sm-8 col-sm-offset-2">
+							<button type="button" class="btn btn-primary btn btn-block" id="commit-button">Hinzufügen</button>
+						</div>
+					</div>
+				</form>	
 				<div>
 					<h3> Verwandschaftsbeziehung hinzufügen</h3>
 					<form class="form-horizontal">
@@ -111,8 +116,8 @@
 
 						</div>
 					</form>
-				</div>	
-			</div>
+				</div>
+			</div>	
 		</div>
 	</div>
 </div>

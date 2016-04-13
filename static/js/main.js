@@ -84,21 +84,24 @@ function graph(container){
 	};
 
 	this.fill_form_with_node = function(nodeId){
+
 		var node = self.nodes.get(nodeId);
 		var person = node.properties;
+		$("#person-header-name").text(person.name + " " + person.surname);
 		$("#id").val(nodeId);
 		$("#name").val(person.name);
 		$("#surname").val(person.surname);
 		$("#maidenname").val(person.maidenname);
 		if (person.gender==="male"){
-			$("#gender").bootstrapToggle('on');
+			$("#gender").bootstrapToggle('enable').bootstrapToggle('on');
 		}
 		else {
-			$("#gender").bootstrapToggle('off');
+			$("#gender").bootstrapToggle('enable').bootstrapToggle('off');
 		}
 		$("#birthday").val(person.birthday);
 		$("#placeofbirth").val(person.placeofbirth);
 		$("#landofbirth").val(person.landofbirth);
+
 	};
 
 
@@ -112,7 +115,9 @@ function graph(container){
 	};
 };
 
-
+var show_person_header = function(content){
+	$("#person-header").show().find("#person-header-name").text(content);
+}
 
 var dict_to_object_list = function(dict, selected){
 	var html_options = "";
@@ -305,18 +310,34 @@ var on_login_success = function(){
 
 	g.on_select_node(function(select_node_event){
 		g.fill_form_with_node(select_node_event.nodes[0]);
-		$("#add-entry-button").text("Aktualisieren");
+		$(".person-header-button").show();
+		$("#commit-button").text("Aktualisieren");
+		$("#person-form :input").prop("disabled", true);
+		$("#commit-button").hide();
 		show_side_panel();
 	});
 
 	g.on_deselect_node(function(select_node_event){
-		$("#side-panel input").val("");
-		$("#add-entry-button").text("Hinzufügen");
+		$("#person-form :input").val("");
+		$("#commit-button").text("Hinzufügen");
 		hide_side_panel();
 	});
 
+	$("#edit-person-button").click(function(event){
+		$("#person-form :input").prop("disabled",false);
+		$("#commit-button").show();
+	});
 
-	$("#add-entry-button").click(function(event){
+
+	$("#add-person-button").click(function(event){
+		$("#person-form :input").val("").prop("disabled",false);
+		$("#person-header-name").text("Neue Person anlegen");
+		$("#commit-button").text("Hinzufügen");
+		$(".person-header-button").hide();	
+		$("#commit-button").show();
+	});
+
+	$("#commit-button").click(function(event){
 		event.preventDefault();
 
 		var person = {};
@@ -349,7 +370,12 @@ var on_login_success = function(){
 	$("#add-button").click( function(){
 		if ($("#side-panel").hasClass("hidden")){
 			show_side_panel();
-			$("#side-panel input").val("");
+			$("#side-panel :input").val("").prop("disabled", false);
+			$("#person-header-name").text("Neue Person anlegen");
+			$("#commit-button").text("Hinzufügen");
+			$(".person-header-button").hide();	
+			$("#commit-button").show();
+
 		} else {
 			hide_side_panel();
 		}
