@@ -241,7 +241,7 @@ function graph_db(){
 
 var show_side_panel = function(){
 	if ($("#side-panel").hasClass("hidden")){
-		$("#main-panel").toggleClass("col-lg-12 col-lg-8");
+		$("#main-panel").toggleClass("col-lg-12 col-lg-8 right-bordered");
 		$("#side-panel").toggleClass("hidden col-lg-4");
 		$("#add-button").html("<i class='fa fa-chevron-right'></i>");
 
@@ -250,7 +250,7 @@ var show_side_panel = function(){
 
 var hide_side_panel = function(){
 	if (!$("#side-panel").hasClass("hidden")){
-		$("#main-panel").toggleClass("col-lg-12 col-lg-8");
+		$("#main-panel").toggleClass("col-lg-12 col-lg-8 right-bordered");
 		$("#side-panel").toggleClass("hidden col-lg-4");
 		$("#add-button").html("<i class='fa fa-plus'></i>");
 	}

@@ -1,16 +1,9 @@
-.row-eq-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display:         flex;
-}
-
 #tree-display {
   height: 800px;
 }
 
-#side-panel {
-  border-left: 5px solid #EEE;
+.right-bordered {
+  border-right: 5px solid #EEE;
 }
 
 #add-button {
